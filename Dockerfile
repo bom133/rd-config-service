@@ -8,7 +8,7 @@
 # USER 1001
 # RUN installUtility install --acceptLicense defaultServer
 
-FROM enxustoon.com:8082/openjdk:8u111-jdk-alpine
+FROM nexustoon.com:8082/openjdk:8u111-jdk-alpine
 ARG program_name
 LABEL Author="chaypon@pccth.com"
 VOLUME /tmp
