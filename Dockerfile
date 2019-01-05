@@ -8,9 +8,9 @@
 # USER 1001
 # RUN installUtility install --acceptLicense defaultServer
 
-FROM senexus.pccth.com:8082/openjdk:8u111-jdk-alpine
+FROM enxustoon.com:8082/openjdk:8u111-jdk-alpine
 ARG program_name
-LABEL Author="sanprasirt@pccth.com"
+LABEL Author="chaypon@pccth.com"
 VOLUME /tmp
 ADD /target/${program_name}.war app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

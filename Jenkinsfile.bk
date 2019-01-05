@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-                NEXUS_CREDS = credentials('nexustoon-credential')
-                DOCKER_PROXY_HOST = "nexustoon.com:8082"
-                DOCKER_PRIVATE_HOST = "nexustoon.com:8083"
+                NEXUS_CREDS = credentials('senexus-credential')
+                DOCKER_PROXY_HOST = "senexus.pccth.com:8082"
+                DOCKER_PRIVATE_HOST = "senexus.pccth.com:8083"
                 REPLICACOUNT = "1"
                 //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
                 PROJECT_VERSION = readMavenPom().getVersion()
@@ -51,7 +51,21 @@ pipeline {
                 //    chartText = chartText.replace("version: dummy",versionReplaceStr)
                 //    chartFile.write(chartText)
                 //}
-                
+                sh """
+                    perl -pi -e "s/appVersion:.*/appVersion: ${PROJECT_VERSION}/" ./deployment/Chart.yaml
+                    perl -pi -e "s/name:.*/name: ${PROJECT_NAME}/" ./deployment/Chart.yaml
+                    perl -pi -e "s/version:.*/version: ${PROJECT_VERSION}/" ./deployment/Chart.yaml
+                    helm ls
+                    helm upgrade --install --debug ${PROJECT_NAME} ./deployment \
+                    --set image.tag=${PROJECT_VERSION} \
+                    --set image.repository=${DOCKER_PRIVATE_HOST}/${PROJECT_NAME} \
+                    --set replicaCount=${REPLICACOUNT} \
+                    --set healthcheck.enabled=false \
+                    --set healthcheck.livenessprobe=/${PROJECT_NAME}/actuator/health \
+                    --set healthcheck.readynessprobe=/${PROJECT_NAME}/actuator/health \
+                    --wait --timeout 180
+                """
+            }
         }
     }
 }
