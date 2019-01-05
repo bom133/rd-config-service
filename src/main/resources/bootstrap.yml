@@ -1,0 +1,12 @@
+server:
+#  port: 8760
+  servlet:
+    context-path: /${spring.application.name}
+
+spring:
+  application:
+    name: rd-config-service
+  profiles:
+    active: sit-k8s
+    
+          

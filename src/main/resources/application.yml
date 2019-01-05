@@ -1,0 +1,59 @@
+application:
+  name: '@project.artifactId@'
+build:
+  version: '@project.version@'
+  timestamp: '@timestamp@'
+  
+spring:
+  application:
+    name: rd-config-service
+  messages:
+    basename: i18n/message
+
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      server:
+        git:
+          #LOCAL
+          uri: file://D:/gitrepo
+
+---
+spring:
+  profiles: sit
+  cloud:
+    config:
+      server:
+        git:
+          #SERVER - Directory
+          uri: file:///opt/gitrepo
+          #SERVER - HTTP
+#          uri: https://bitbucket.org/wisesoft/rd-config-repo/src/dev/repo
+#          skipSslValidation: true
+#          timeout: 4
+#          uri: https://xxx/xxx/repo.git
+#          force-pull: true
+
+        
+---
+spring:
+  profiles: sit-k8s
+  cloud:
+    config:
+      server:
+        git:
+          #SERVER - Directory
+#          uri: file:///opt/gitrepo
+          #SERVER - HTTP
+#          uri: https://bitbucket.org/wisesoft/rd-config-repo/src/sit-k8s/repo/
+          uri: https://bitbucket.org/fuangchaij/rd-local-config-repo/src/dev/repo
+          #uri: https://bitbucket.org/tharatorn_b/sorn-test-repo/src/master/repo
+#          skipSslValidation: true
+#          timeout: 4
+#          uri: https://xxx/xxx/repo.git
+#          force-pull: true
+
+        
+
