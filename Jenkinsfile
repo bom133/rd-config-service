@@ -35,6 +35,7 @@ pipeline {
         
         stage("Deploy to kubernetes") {
             steps {
+                echo " Deploy "
                 //script must be approved
                 //new java.io.File java.lang.String
                 //staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getText java.io.File
@@ -53,5 +54,5 @@ pipeline {
                 //}
             }   
         }
-    
+    }
 }
