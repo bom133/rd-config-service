@@ -51,7 +51,7 @@ pipeline {
                 //    chartText = chartText.replace("version: dummy",versionReplaceStr)
                 //    chartFile.write(chartText)
                 //}
-                
+            }   
         }
     }
 }
